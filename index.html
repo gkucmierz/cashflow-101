@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>cashflow - rat race</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <style rel="stylesheet" type="text/css">
+html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}li{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}
+
+body {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+h1 {
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5px 0;
+}
+h2 {
+  background: #000;
+  color: #fff;
+  padding: 4px 10px;
+}
+h3 {
+  background: #000;
+  color: #fff;
+  display: inline;
+  padding: 4px 20px;
+}
+table {
+  margin: 10px;
+}
+table tr td {
+  padding: 1px 4px;
+}
+input[type=text] {
+  border: 0;
+  border-bottom: 1px solid #888;
+}
+input[type=text]:hover {
+  background: #ddf;
+}
+input[type=number] {
+  border: 0;
+  border-bottom: 1px solid #888;
+}
+input[type=number]:hover {
+  background: #ddf;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input.numeric {
+  text-align: right;
+}
+
+input[type=button][value='+'] {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/xJREFUeNq0VV1oHFUU/u6d3dmd3W032aQoFBTfRPHFUGzE2iKl7YMEBJ/EFlHx1ScLUmnpmyBCfRV8sSqCggi+1IRqoDQiFIRCiFAQqtJIk1032d+Zuff6nbub2WzSRn3oZb+Z2XvPOd85371nRjnn8NqygtKACgBN2ASImxgMjVApHOXTY8QTRETcIFadxbXPDrk69hhKCM4IgQTPAWmHwVsQwioDn+PyW3Co8g6tNQIiSVNwTWxixviCRBe+POxu35fg1RXlgxuax3/LLE7x+jkda5PVGrSwk0BIJLB31L461BtrXHJCdParWffRPQle+VV74+6qD/42PT4s5KOgXKrApsiCZ05bJENJE2a2sek1/eSbI/bN7QSSBwwdOlQyNZhLElyKitWgEFYQ9zmXOkri/H0LyRZi522AEBMTB8T/jRd/0Od3VfDSskZnFQeZ6UpUKFVKxTIoDzFMm7d3Hr+MmcmT/u+NxhV8sHJaqh1Uo5WvxLDcRrMh9keuHLfXsgq6LYUkUReTVFXCQoUl879h9lYN4FQWXIY8y5ysJbJO2zhVsMhzbwrif2lMoriHGgOe3l+d9oETQylYAVXIsHNka7RLxNaIbECpXJUYM0cXglmxy8ml38cpaxAaZiWSiSRw2HOMkTp/OERw/hSlImI3x5klT8DyZpULEBsxVt7h4pOf4vDUifsSfPfcX9nzT+vf48LymeGuAkFYQrfXGVXAEg+GbATR0mdCgr2C7xxi63OTSqzEyEvMRzKCNFChStiWLE1OhS4q/N9howBpy3oSv/G+O4ebnIao97gziSzKFlQ0lroL/zn4UmceKVONhxveNxZpAc2sApPTN1OToiwdJz++7M7+/rqvxJExbVpcf/qPsaDP//YodMhkaGvaDBjLcR1U3u7FcDW9nBGwIRfdPuWzF/2TNQu1bkfdmNstWeeuQboxsnHbTl43H7P31NWRRA4/myJuNpN2dra394AJdsviG3G47vtg6NPju96UVYvPX2cEiZPs1budYp/BtO9S383Wz9MhwGJ7tCc/thaQ5AZrybZuT3lC6sGm3N//81i/nr2LJq8Wt3y/5Xmbmwqm4fpudK5rGrqsB3vCTG3Hwm46YlzGhqrDaivaP9N4odfKCPYvZAQV4jrx1HR0AFY0/peOlgR0SaOersM6e5czz24c790aexcNJRK0iGPE4p3OGuIpfkomcjAF7cv3MggY1YQadl8A91AOd+I19K27Rb+x4FkF4Xy0M1MeQH54gHNENYoiRKUS8rnc4D1kDHq9Htotr4J8zT4m3otPdJv3/KIFWwS75agRLxPy4pohHh7OS6BfiHnisjnZvb3nR/9BDo0HPP4RYADRWDKHMhKeswAAAABJRU5ErkJggg%3D%3D');
+}
+input[type=button][value='-'] {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABFJJREFUeNq0Vl1sVEUU/mbv3bu7Ld3CYuNDDZEHXnwwfRCTBfEvkZA0qUCsMeALMTaBxDRiMMYmGH9CH9AEokRplBdRjMYQoTxgfKiKJBb505LQCiIodZWw2+7u3b137tw7nrmzP91ut8QHT/Jl7s6cOf9zzjIpJRhjkOffAaIGYJlAJgdM3AAkgAizCI/Q10rCfYQE4Swhg0CeYttHsmhBoeyaggtvA3ESPpUBrhJMo5N4hggDJKiTuElZRMMXoEsKnM4/pfPX2OChG4sr+GUvcJOMmfhDWb2BrP8EfpDCsmXKDSAI6jcjrKKM1uxtUgRO/C+zlz7eP19BpPYrbwMXfgeEGITDRyFZCu1JoExGFktAyQFsR6/FMlAo6bWtg8KasMC9fXL4mQ/ne1FXcJGEu7yPhO9DLGHAiGphDingnobn1b9d2i+7mscn75Kdav85+frm3XMV1EM01NdN35MsFm9HgvKY3gg8tElz7Xl24Sy+elivp78iHKWYkKKZGRWbdWx49FRDiLyS8xZz3XaYUW1dVXhVkBCNqApXtObJyr7Ok3D4uw0hkm/0pkzBt6KD4sld5Veztbs/0yFSUN/ziQX6bjwOktUjX1mfrilwcqVe6XpReELHF8R8cLBZyJtfasynvVsr+eGh95ILFLJ2f12BXX40CHzNIIixQBX1N5X1nqdxRxp+ihJt6yoMPeRgpoEId9fWFASetyIIZKVShK6cbBH4h170i+tbC9+1QfPl7Ppd1ws7gOGLexSLqTMRxDxisJT1/4XKzgL9QTnBlUyj5oFryjx3HB2iaiKreG+stQJ1NpeXjAxIhnBdeCbsmoKs9CbbhEPh9yAVo6jg4A939kLxVPh9in9AqyjbKFjBbzUFU5nid7GlJuVCwAutoFh+NL5AzB8Gdq6jIsg17hOv4EqBCGV0mAI3887pmoLNx66P5aP+NYsXQgsiUjQL37GaKoX6j03Y9UTTsQk/vGsJF/5SVj508dYXc3vR7IkrsweQ9BCPSP1oRkfqt5/vocbmwKNq8XIlXWUDPfXz4yNht7UklbpVwE+Z4pEPJmYnG3oR0V1/9ncd67YiaRjL9bM3GMI5ICRc12+wOBanIjEiqlVTggO9sjwoBtf7x2Z6T067lxrnwZYUHjyZX/PN4x2HkyZbCauLXrgLHshFc6xGwpKkRYbkiDeY3XmuNHBgylHP3W+cBxS/M7fFjxu/zW+/VeI/ozyNeLeJZCqKpMUQo/YR+H4Ik7pmMqo6tIkl97aRBxkaFc70C+OFHSR8VAlvbtebLL1xlEe7E+yBI6vNbekU22IytIdNUMGKVVovlaVNZT6To2kJcbkoT2w7K94fz8nv6bS08MjsM/SQV0qO+8qzFWtT7P6hVeyxniRLL7ewyoogFTorYec8XP21KM/tvya//nxanqftK+qo5UxuQRQI3E3oItD8hFUNKKFAoIGMv1S/XPRfxf9J/wowAFn7djHyydS0AAAAAElFTkSuQmCC');
+}
+input[type=button][value='e'] {
+  background: url('data:image/png;base64,R0lGODlhGAAYAOZNALq6uv+LL/+FLv+yW/+rWv/CXv+5XP/LX//UYv+zMf+9M//eZOOObfzVofG3iuaXc/fHlv3bpf7ep+umfvG3i+SSb+iYbL6+vtOih7y8vOGXbf/fZ/+2Mv+7M//emvf39/rbtv/CNKmAYSoiGe6xhv+iL9ra2uTk5MTExP/DXv/imv95J9mvhODCkP+8Xf+FKv/JYt3d3eSObNDQ0P/fZP/XZPK3grKWcrKLaW5cQP/lZ/+1XP+NK/ry5s6Sb//GmP/QYvG2g3xeQf++M+zs7P/9+/+ZLvvSk/+0MsmshP+tMnxkS8Csnv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAE0ALAAAAAAYABgAAAe5gE2Cg4SFgioehoqLIR1ISouRgkMcOhslRpKKCgk0NUAwPC+ahJwLCAcpLjsrP6RNpqgFBgMEASSksQeztQECMZq6vLYCAMEJp7u0xMaSwsu+zZHPvcXHycPRmhUU2NDWktwRst/Si0EUERIN2eCRRTbqDRAO1eaLIPL0Ew/apEfr9j1gwODeoh4t5jngR9DgoiQ3WCwcKMPhohxLRPiwoAFDhleDRgjBwQSFCSIgB12YceJDypekAgEAOw%3D%3D');
+}
+input[type=button][value='c0'] {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABu0lEQVR42u2WO08CQRSFp8MgITxKKgg9EEK20MLYa+Wv0AQtsaWX0Ai/QWv9MRS8CbDLG3aXN+OcTe7GDSQCLomFxZcls/ecM3eYGWCMsfNwOHwVjUaf4vF4WpKkdCKRMJ/fP+/zDh6xWCwZCoUuhfcZCwaDN5lM5q1QKMiqqvL1em2w2WwOgnSapnHhpWSz2XeXy3XNxMyfi8WiJssyn8/nfLVaGZBgX0i3WCy4oii8VCrpPp/vkUUikXSz2eQImM1mRsFyuTQg0U9QPbTwQAA8vV5vion1MgPQnq7rfDqdGqB4H6geWnhYAqiDdrvN8R3YASa71QECRqORLVgCqINWq8UHg4EtYLI7A3q9ni3Aa2uJMNjpdGzBEkAd0E6yA/KzdHAKzA7q9To/BWZAtVrlp+A/4I8EYJvSQK1WMzh215B+ZwcooBN97AGjE9xoNKwBGKCrAndJv98/+IKDBlp44LKDJy1Rqlwuq91ulw+HQ+O6HY/HfDKZHAQ00MIDQZVKRfX7/UkWCATu8vn8h0jVUfTbHxt4iOXSc7ncp9PpvBX/LNiFw+G493g8L6KlVztwu90Z4fkgvKUv5AleYhI9LH0AAAAASUVORK5CYII%3D');
+}
+input[type=button][value='c1'] {
+  background: url('data:image/png;base64,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');
+}
+
+
+input[type=button][value] {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  font-size: 0;
+  cursor: pointer;
+  padding: 4px 0;
+  opacity: .5;
+}
+input[type=button][value]:hover {
+  opacity: 1;
+}
+/*
+http://www.iconfinder.com/ajax/download/png/?id=9648&s=24
+http://www.iconfinder.com/ajax/download/png/?id=9652&s=24
+http://www.iconfinder.com/ajax/download/png/?id=9632&s=24
+http://www.iconfinder.com/ajax/download/png/?id=9604&s=24
+http://www.iconfinder.com/ajax/download/png/?id=9662&s=24
+*/
+
+.auto {
+  background-color: #eee;
+}
+.border {
+  border: 1px solid #000;
+}
+
+.inline {
+  display: inline-block;
+}
+.info {
+  text-align: right;
+  color: #999;
+}
+  </style>
+  <script type="text/javascript">
+
+(function(){
+  var professionsData = [
+    {
+      name: 'Policjant',
+      salary: 3000,
+      expenses: [580, 400, 0, 100, 60, 50, 690],
+      liabilities: [46e3, 0, 5e3, 2e3, 1e3],
+      childCost: 160
+    },
+    {
+      name: 'Dozorca',
+      salary: 1600,
+      expenses: [280, 200, 0, 60, 60, 50, 300],
+      liabilities: [20e3, 0, 4e3, 2e3, 1e3],
+      childCost: 70
+    },
+    {
+      name: 'Prawnik',
+      salary: 7500,
+      expenses: [1830, 1100, 390, 220, 180, 50, 1650],
+      liabilities: [115e3, 78e3, 11e3, 6e3, 1e3],
+      childCost: 380
+    },
+    {
+      name: 'Lekarz',
+      salary: 13200,
+      expenses: [3420, 1900, 750, 380, 270, 50, 2880],
+      liabilities: [202e3, 150e3, 19e3, 9e3, 1e3],
+      childCost: 640
+    },
+    {
+      name: 'Pilot',
+      salary: 9500,
+      expenses: [2350, 1330, 0, 300, 660, 50, 2210],
+      liabilities: [143e3, 0, 15e3, 22e3, 1e3],
+      childCost: 480
+    },
+    {
+      name: 'Nauczyciel',
+      salary: 3300,
+      expenses: [630, 500, 60, 100, 90, 50, 760],
+      liabilities: [50e3, 12e3, 5e3, 3e3, 1e3],
+      childCost: 180
+    },
+    {
+      name: 'Kierowca ciężarówki',
+      salary: 2500,
+      expenses: [460, 400, 0, 80, 60, 50, 570],
+      liabilities: [38e3, 0, 4e3, 2e3, 1e3],
+      childCost: 140
+    },
+    {
+      name: 'Mechanik',
+      salary: 2000,
+      expenses: [360, 300, 0, 60, 60, 50, 450],
+      liabilities: [31e3, 0, 3000, 2000, 1000],
+      childCost: 110
+    },
+    {
+      name: 'Menedżer',
+      salary: 4600,
+      expenses: [910, 700, 60, 120, 90, 50, 1000],
+      liabilities: [75e3, 12e3, 6e3, 3e3, 1e3],
+      childCost: 240
+    },
+    {
+      name: 'Sekretarka',
+      salary: 2500,
+      expenses: [460, 400, 0, 80, 60, 50, 570],
+      liabilities: [38e3, 0, 4e3, 2e3, 1e3],
+      childCost: 140
+    },
+    {
+      name: 'Pielęgniarka',
+      salary: 3100,
+      expenses: [600, 400, 30, 100, 90, 50, 710],
+      liabilities: [47e3, 6e3, 5e3, 3e3, 1e3],
+      childCost: 170
+    },
+    {
+      name: 'Inżynier',
+      salary: 4900,
+      expenses: [1050, 700, 60, 140, 120, 50, 1090],
+      liabilities: [75e3, 12e3, 7e3, 4e3, 1e3],
+      childCost: 250
+    }
+    // {
+    //   name: 'Żołnierz',
+    //   salary: 2000,
+    //   expenses: [360, 300, 0, 60, 60, 50, 450],
+    //   liabilities: [31e3, 0, 3e3, 2e3, 1e3],
+    //   childCost: 110
+    // },
+    // {
+    //   name: 'Strażak',
+    //   salary: 4900,
+    //   expenses: [1050, 60, 140, 120, 50, 1090],
+    //   liabilities: [75e3, 12e3, 7e3, 4e3, 1e3],
+    //   childCost: 70///
+    // },
+    // {
+    //   name: 'Web Designer',
+    //   salary: 3100,
+    //   expenses: [600, 400, 30, 100, 90, 50, 710],
+    //   liabilities: [47e3, 6e3, 5e3, 3e3, 1e3],
+    //   childCost: 70///
+    // },
+    // {
+    //   name: 'Szef kuchni',
+    //   salary: 2500,
+    //   expenses: [460, 0, 80, 60, 50, 570],
+    //   liabilities: [38e3, 0, 4e3, 2e3, 1e3],
+    //   childCost: 70///
+    // },
+    // {
+    //   name: '',
+    //   salary: 000,
+    //   expenses: [],
+    //   liabilities: [],
+    //   childCost:
+    // }
+  ];
+
+  var getType = function(obj){
+    return ({}).toString.call(obj).slice(8, -1);
+  };
+  var isString = function(obj){
+    return getType(obj) === 'String';
+  };
+  var isValidNumber = function(str){
+    return !!str.match(/^\-?(0|([1-9][0-9]*))$/);
+  };
+
+  var field = function(sel){
+    if( isString(sel) ){
+      var obj = document.querySelector(sel);
+    }else{
+      var obj = sel;
+    }
+    if( !isValidNumber(obj.value) ){
+      obj.value |= 0;
+    }
+    //obj.value |= 0;
+
+    return Object.create({}, {
+      value: {
+        get: function(){
+          return parseInt(obj.value, 10);
+        },
+        set: function(val){
+          obj.value = val;
+        }
+      }
+    });
+  };
+
+  var fields = function(sel){
+    var arr = [].map.call(document.querySelectorAll(sel), function(obj){
+        return field(obj);
+      });
+    
+    return Object.create(arr, {
+      value: {get: function(){
+        return this.map(function(el){
+          return el.value;
+        }).reduce(function(acc, a){
+          return acc + a;
+        });
+      }}
+    });
+  };
+
+  var insertAfter = function(node, newNode, refNode){
+    return ( refNode.nextSibling ?
+      node.insertBefore(newNode, refNode.nextSibling) :
+      node.appendChild(newNode)
+    );
+  }
+
+  //----------------------------------------//
+
+  var calculate = function(){
+    field('#children_costs').value =
+      field('#number_children').value *
+      field('#cost_per_children').value;
+
+    field('.sum_passive_income1').value = fields('.passive_income1').value;
+    field('.sum_passive_income2').value = fields('.passive_income2').value;
+
+    field('#passive_income').value =
+      field('.sum_passive_income1').value +
+      field('.sum_passive_income2').value;
+
+    field('#sum_income').value =
+      field('#passive_income').value +
+      fields('#salary').value;
+
+    field('.loan_payment').value = Math.ceil(field('.loan').value * 1e-3) * 1e2;
+
+    field('#sum_costs').value = fields('.cost').value;
+
+    field('#cash_flow').value = 
+      field('#sum_income').value -
+      field('#sum_costs').value;
+
+    var costs = document.querySelectorAll('.cost');
+    [].map.call(document.querySelectorAll('.liability'), function(inp, i){
+      var td = inp.parentNode.parentNode.querySelector('td.info');
+      var roi = field(costs[i+1]).value * 1200 / field(inp).value;
+      td.innerHTML = isNaN(roi) || roi === 1/0 ? '??%' : roi.toFixed(0) + '%';
+    });
+
+    [].map.call(document.querySelectorAll('input[type=button].child'), function(btn, i){
+      btn.value = i >= field('#number_children').value ? 'c0' : 'c1';
+    });
+  };
+
+  var addRemovableEvent = function(tr){
+    var tds = tr.querySelectorAll('td');
+    var btn = [].slice.call(tds, -1)[0].querySelector('input[type=button]');
+    btn.addEventListener('click', function(){
+      if( btn.value === '-' ){
+        tr.parentNode.removeChild(tr);
+      }else if( btn.value === '+' ){
+        var newTr = document.createElement('tr');
+        newTr.innerHTML = tr.innerHTML;
+        btn.value = '-';
+        addInputEventsToNode(newTr);
+        insertAfter(tr.parentNode, newTr, tr);
+        addRemovableEvent(newTr);
+      }
+      calculate();
+    }, false);
+  };
+
+  var addInputEvents = function(inp){
+    'change keyup'.split(' ').map(function(evt){
+      inp.addEventListener(evt, function(e){
+        if( e.type === 'keyup' && [8, 46, 189].indexOf(e.keyCode) !== -1 ){
+          return;
+        }
+        calculate();
+      }, false);
+    });
+  };
+
+  var addInputEventsToNode = function(obj){
+    [].map.call(obj.querySelectorAll('.numeric'), addInputEvents);
+  };
+
+  addEventListener('DOMContentLoaded', function(){
+    addInputEventsToNode(document);
+
+    [].map.call(document.querySelectorAll('tr.removable'), addRemovableEvent, false);
+
+    (function(){
+      var oldProf = document.querySelector('#profession');
+      var newProf = document.createElement('select');
+      [].concat({name: '-- wybierz zawód --'}, professionsData).map(function(prof, i){
+        var opt = document.createElement('option');
+        opt.text = prof.name;
+        newProf.add(opt);
+      });
+      oldProf.parentNode.replaceChild(newProf, oldProf);
+
+      newProf.addEventListener('change', function(){
+        var sel = newProf.selectedIndex - 1;
+        if( 1 ){
+          oldProf.value = professionsData[sel].name;
+          newProf.parentNode.replaceChild(oldProf, newProf);
+        }
+
+        document.querySelector('#salary').value = professionsData[sel].salary;
+        professionsData[sel].expenses.map(function(expense, i){
+          document.querySelectorAll('.cost')[i].value = expense;
+        });
+        professionsData[sel].liabilities.map(function(liability, i){
+          document.querySelectorAll('.liability')[i].value = liability;
+        });
+        document.querySelector('#cost_per_children').value = professionsData[sel].childCost;
+
+        calculate();
+      }, false);
+    })();
+
+    [].map.call(document.querySelectorAll('input[type=button].child'), function(btn){
+      btn.addEventListener('click', function(){
+        if( btn.value === 'c0' ){
+          field('#number_children').value++;
+        }
+        if( btn.value === 'c1' ){
+          field('#number_children').value--;
+        }
+        calculate();
+      }, false);
+    });
+
+    // replace type="text" => type="number" for .numeric
+    [].map.call(document.querySelectorAll('input.numeric'), function(inp){
+      inp.type = 'number';
+    });
+
+    // [].map.call(document.querySelectorAll('table.extendable'), function(table){
+    //   var trNum = table.querySelectorAll('tr').length;
+    //   [].map.call(table.querySelectorAll('input[type=text]'), function(inp){
+    //     'change keyup'.split(' ').map(function(evt){
+    //       inp.addEventListener(evt, function(e){
+    //         [].map.call(table.querySelectorAll('tr'), function(tr){
+
+    //         });
+    //       });
+    //     });
+    //   });
+    // });
+
+    calculate();
+  }, false);
+})();
+  
+  </script>
+</head>
+
+<body>
+  
+  <div>
+    <nobr>
+      <div class="inline">
+        <h3>Zawód</h3>
+        <input type="text" id="profession"/>
+      </div>
+      <div class="inline">
+        <h3>Gracz</h3>
+        <input type="text" />
+      </div>
+    </nobr>
+  </div>
+
+  <div>
+    <h1>ZESTAWIENIE FINANSOWE</h1>
+    <nobr>
+      <div class="border inline">
+        <h2>PRZYCHODY</h2>
+        <table class="extendable">
+          <tr>
+            <td>Pozycje przychodu</td>
+            <td>Przepływ pieniędzy</td>
+          </tr>
+          <tr>
+            <td>Zarobki:</td>
+            <td><input type="number" id="salary" class="income numeric"/></td>
+          </tr>
+          <tr>
+            <td>Oprocentowanie/Dywidendy:</td>
+            <td><input type="text" class="auto sum_passive_income1 income numeric"/></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income1 income numeric"/></td>
+            <td><input type="button" value="+" /></td>
+          </tr>
+          <tr>
+            <td>Nieruchomości/Biznesy:</td>
+            <td><input type="text" class="auto sum_passive_income2 numeric" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="-" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="-" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="-" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="-" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="-" /></td>
+          </tr>
+          <tr class="removable">
+            <td><input type="text" /></td>
+            <td><input type="text" class="passive_income2 numeric"/></td>
+            <td><input type="button" value="+" /></td>
+          </tr>
+        </table>
+        <h2>KOSZTY</h2>
+        <table>
+          <tr>
+            <td>Podatki:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata kredytu hipotecznego:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata kredytu studenckiego:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata kredytu na samochód:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata kart kredytowych:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata kredytu konsumenckiego:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Inne koszty:</td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Koszt utrzymania dzieci:</td>
+            <td><input type="text" id="children_costs" class="auto cost numeric"/></td>
+          </tr>
+          <tr>
+            <td>Spłata pożyczki:</td>
+            <td><input type="text" class="auto cost numeric loan_payment"/></td>
+          </tr>
+          <!--tr>
+            <td><input type="text" /></td>
+            <td><input type="text" class="cost numeric"/></td>
+          </tr-->
+        </table>
+      </div>
+      <div class="inline">
+        <h3>Audytor</h3>
+        <input type="text" />
+        <hr />
+        <table>
+          <tr>
+            <td>Przychód pasywny:</td>
+            <td><input type="text" id="passive_income" class="auto numeric"/> $</td>
+          </tr>
+          <tr>
+            <td>Suma przychodów:</td>
+            <td><input type="text" id="sum_income" class="auto numeric"/> $</td>
+          </tr>
+        </table>
+        <hr />
+        <table>
+          <tr>
+            <td>Liczba dzieci:</td>
+            <td><input type="text" id="number_children" class="numeric"/></td>
+            <td>
+              <input type="button" class="child" value="c0" />
+              <input type="button" class="child" value="c0" />
+              <input type="button" class="child" value="c0" />
+            </td>
+          </tr>
+          <tr>
+            <td>Koszt utrzymania jednego dziecka:</td>
+            <td><input type="text" id="cost_per_children" class="numeric"/></td>
+            <td>$</td>
+          </tr>
+        </table>
+        <hr />
+        <table>
+          <tr>
+            <td>Suma kosztów:</td>
+            <td><input type="text" id="sum_costs" class="auto numeric"/> $</td>
+          </tr>
+          <tr>
+            <td>Miesięczny przepływ pieniężny (WYPŁATA):</td>
+            <td><input type="text" id="cash_flow" class="auto numeric"/> $</td>
+          </tr>
+        </table>
+      </div>
+    </nobr>
+  </div>
+  <div>
+    <h1>ZESTAWIENIE BILANSOWE</h1>
+    <div class="border">
+      <nobr>
+        <div class="inline">
+          <h2>AKTYWA</h2>
+          <table>
+            <tr>
+              <td colspan="2">Oszczędności</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Akcje/Fundusze/CD:</td>
+              <td>Ilość:</td>
+              <td>Cena zakupu:</td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="+" /></td>
+            </tr>
+            <tr>
+              <td>Nieruchomości/Biznesy:</td>
+              <td>Twój wkład:</td>
+              <td>Koszt:</td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="text" class="numeric"/></td>
+              <td><input type="button" value="+" /></td>
+            </tr>
+          </table>
+        </div>
+        <div class="inline">
+          <h2>PASYWA</h2>
+          <table>
+            <tr>
+              <td>Własny kredyt hipoteczny:</td>
+              <td><input type="text" class="numeric liability" /></td>
+              <td class="info">??%</td>
+            </tr>
+            <tr>
+              <td>Kredyt studencki:</td>
+              <td><input type="text" class="numeric liability" /></td>
+              <td class="info">??%</td>
+            </tr>
+            <tr>
+              <td>Kredyt na samochód:</td>
+              <td><input type="text" class="numeric liability" /></td>
+              <td class="info">??%</td>
+            </tr>
+            <tr>
+              <td>Karty kredytowe:</td>
+              <td><input type="text" class="numeric liability" /></td>
+              <td class="info">??%</td>
+            </tr>
+            <tr>
+              <td>Kredyt konsumencki:</td>
+              <td><input type="text" class="numeric liability" /></td>
+              <td class="info">??%</td>
+            </tr>
+            <tr>
+              <td>Nieruchomości/Biznesy:</td>
+              <td>Kredyt/Zobowiązania</td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric" /></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric" /></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric" /></td>
+              <td><input type="button" value="-" /></td>
+            </tr>
+            <tr class="removable">
+              <td><input type="text" /></td>
+              <td><input type="text" class="numeric" /></td>
+              <td><input type="button" value="+" /></td>
+            </tr>
+            <tr class="removable">
+              <td>Pożyczka:</td>
+              <td><input type="text" class="numeric loan" /></td>
+              <td><input type="button" value="e" /></td>
+            </tr>
+          </table>
+        </div>
+      </nobr>
+    </div>
+  </div>
+</body>
+</html>
